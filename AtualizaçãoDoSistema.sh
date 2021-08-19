@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Script para realizar a atualização do sistema Linux via interface gráfica ou diretamente pelo terminal
+# Para interface gráfica, utilizado o zenity
+# Criado em: 13/08/2021
+# Criado por: Jacqueline Rodrigues
+# Contato: jacs.rodriguess@gmail.com
+
+# Barra de processo da atualização
 function atualizacao () {
 	
 	echo "# Iniciando atualização" 
@@ -27,6 +34,7 @@ function atualizacao () {
 }
 
 
+# Opção de escolha para iniciar a atualização
 ESCOLHA=$(zenity --list --title="Atualização do Sistema" --text="Como deseja atualizar o sistema?" \
 	--radiolist \
 	--column "Marcar" \
@@ -35,12 +43,16 @@ ESCOLHA=$(zenity --list --title="Atualização do Sistema" --text="Como deseja a
 
 if [ $ESCOLHA = "Interface" ]
 then
+	# Barra de processo da atualização, juntamente com o comando para atualização da máquina (apt-get update)
 	zenity --info --text="Você escolheu $ESCOLHA"
 	atualizacao | zenity --progress --title="Atualização da Máquina" --auto-close | apt-get update
 	zenity --info --text="Sistema atualizado!"
 	exit 0
 else
+	# Atualização diretamente via terminal
 	apt-get update
 	echo
 	echo Sistema atualizado
 fi
+
+# Fim do script
